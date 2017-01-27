@@ -66,7 +66,7 @@ app.post('/score',(request,response)=>{
     });
 });
 
-http.listen(3030,'127.0.0.1',()=>{
+http.listen(3030,'0.0.0.0',()=>{
     console.log('start test server');
     console.log('listening on 127.0.0.1:3030');
 });

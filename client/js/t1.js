@@ -165,18 +165,42 @@ var Listener=new(function(){
         Model.propagate(+a.x,+a.y,0)
         if(Model.counter===0){
             Render.win()               // your win :-)
+            var player = prompt("Please enter your name", "Harry Potter");
+            $.ajax({
+              type: "POST",
+              url: "/score",
+              data: {"player": player,"score":Model.time},
+              success: function () {
+                  // body...
+              },
+              dataType: "json"
+            });
         }
         Render.render(Model.matrix)
     }
     this.newGame=function(e){
         console.log('new game')
-        // Insert your function right here!!
+        // reset game status
+        Model.starttime = false;
+        Model.time = 0;
+        Model.generateMatrix();
+        // render new matrix
+        Render.listener.render(Model.matrix);
     }
 })()
 
 var pretty=function(time){
-    // TODO
-    return time;
+    var formattedTime = "";
+
+    var hours = Math.floor(time / 3600);
+    if (hours > 0) {
+        time = time - hours * 3600;
+        formattedTime = hours + ":";
+    }
+    var minutes = Math.floor(time / 60);
+    var seconds = time - minutes * 60;
+    
+    return formattedTime + minutes ":" + seconds;
 }
 
 window.onload=function(){
