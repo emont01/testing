@@ -171,7 +171,7 @@ var Listener=new(function(){
               url: "/score",
               data: {"player": player,"score":Model.time},
               success: function () {
-                  // body...
+                  console.log("score recorded");
               },
               dataType: "json"
             });
@@ -200,7 +200,7 @@ var pretty=function(time){
     var minutes = Math.floor(time / 60);
     var seconds = time - minutes * 60;
     
-    return formattedTime + minutes ":" + seconds;
+    return formattedTime + minutes + ":" + seconds;
 }
 
 window.onload=function(){
