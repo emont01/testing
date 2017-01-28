@@ -201,12 +201,17 @@ var pretty=function(time){
     var hours = Math.floor(time / 3600);
     if (hours > 0) {
         time = time - hours * 3600;
-        formattedTime = hours + ":";
+        formattedTime = pad(hours, 2) + ":";
     }
     var minutes = Math.floor(time / 60);
     var seconds = time - minutes * 60;
     
-    return formattedTime + minutes + ":" + seconds;
+    return formattedTime + pad(minutes, 2) + ":" + pad(seconds, 2);
+}
+
+function pad (str, max) {
+  str = str.toString();
+  return str.length < max ? pad("0" + str, max) : str;
 }
 
 window.onload=function(){
