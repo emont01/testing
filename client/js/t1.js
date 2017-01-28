@@ -1,5 +1,5 @@
 var Model=new(function(){
-    this.bombs=48
+    this.bombs=1
     this.rows=16
     this.columns=16
     this.counter=(this.rows*this.columns)-this.bombs
@@ -101,6 +101,12 @@ var Model=new(function(){
                 this.counter--
         }
     }
+    this.reset=function(){
+        this.counter = (this.rows*this.columns)-this.bombs;
+        this.starttime = false;
+        this.time = 0;
+        this.generateMatrix();
+    }
 })()
 
 var Render=new(function(){
@@ -143,6 +149,16 @@ var Render=new(function(){
     this.win=function(){
         console.log('win')
         document.images[0].src='/png/t1_win.png'
+        var player = prompt("Please enter your name", "Harry Potter");
+        $.ajax({
+          type: "POST",
+          url: "/score",
+          data: JSON.stringify({'player': player,'score':Model.time}),
+          success: function (data) {
+              console.log('score recorded: ' + JSON.stringify(data));
+          },
+          contentType: 'application/json; charset=utf-8'
+        });
     }
     this.loose=function(){
         console.log('loose')
@@ -165,25 +181,13 @@ var Listener=new(function(){
         Model.propagate(+a.x,+a.y,0)
         if(Model.counter===0){
             Render.win()               // your win :-)
-            var player = prompt("Please enter your name", "Harry Potter");
-            $.ajax({
-              type: "POST",
-              url: "/score",
-              data: {"player": player,"score":Model.time},
-              success: function () {
-                  console.log("score recorded");
-              },
-              dataType: "json"
-            });
         }
         Render.render(Model.matrix)
     }
     this.newGame=function(e){
-        console.log('new game')
+        console.log('new game');
         // reset game status
-        Model.starttime = false;
-        Model.time = 0;
-        Model.generateMatrix();
+        Model.reset();
         // render new matrix
         Render.listener.render(Model.matrix);
     }
