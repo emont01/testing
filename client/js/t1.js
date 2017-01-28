@@ -189,7 +189,9 @@ var Listener=new(function(){
         // reset game status
         Model.reset();
         // render new matrix
-        Render.listener.render(Model.matrix);
+        document.querySelector('.chrono').innerHTML=pretty(Model.time);
+        Render.render(Model.matrix);
+        $('td.hide').html('');
     }
 })()
 
