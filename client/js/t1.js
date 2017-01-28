@@ -1,5 +1,5 @@
 var Model=new(function(){
-    this.bombs=1
+    this.bombs=48
     this.rows=16
     this.columns=16
     this.counter=(this.rows*this.columns)-this.bombs
